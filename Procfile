@@ -1,0 +1,1 @@
+web: gunicorn booking_with_mishra.wsgi

@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-change-this-key'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # =====================================================
@@ -233,3 +233,5 @@ EMAIL_HOST_PASSWORD = 'czscqvtffnfbfhbf'
 RAZORPAY_KEY_ID = 'rzp_test_StDg0SSFvwTENd'
 
 RAZORPAY_KEY_SECRET = '8ZjmNRqz9uuKTSPMxYCjCJXt'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
