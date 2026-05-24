@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking With Mishra | Bloody Mary Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           1. MISHRA OS - CORE VARIABLES & RESET
+           ========================================================================== */
+        :root {
+            --bg-dark: #050000;
+            --bg-lighter: #0a0000;
+            --blood-red-bright: #ff0000;
+            --blood-red-deep: #8a0303;
+            --blood-red-dark: #3a0000;
+            --blood-plasma: #ff0808;
+            --blood-coagulated: #9e0000;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --text-pure-white: #ffffff;
+            --font-heading: 'Cinzel Decorative', cursive;
+            --font-body: 'Montserrat', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --glow-red: 0 0 15px rgba(255, 0, 0, 0.5), 0 0 30px rgba(138, 3, 3, 0.4);
+            --glow-red-intense: 0 0 20px #ff0000, 0 0 40px #8a0303, 0 0 60px #ff0000;
+            --vfx-blood-glow: 0 0 15px rgba(255, 8, 8, 0.6), 0 0 30px rgba(158, 0, 0, 0.4);
+            --nav-bg: rgba(5, 0, 0, 0.85); 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1a0000 0%, #050000 80%);
+            background-attachment: fixed;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--blood-red-deep); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--blood-red-bright); }
+
+        /* ==========================================================================
+           2. PREMIUM NAVIGATION
+           ========================================================================== */
+        .premium-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(158, 0, 0, 0.3);
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.4s ease;
+        }
+
+        .premium-nav:hover {
+            border-bottom: 1px solid rgba(255, 8, 8, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(158, 0, 0, 0.2);
+        }
+
+        .nav-logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-pure-white);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            color: var(--blood-plasma);
+            text-shadow: var(--vfx-blood-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-item {
+            font-family: var(--font-body);
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--blood-plasma);
+            box-shadow: 0 0 10px var(--blood-plasma);
+            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .nav-item:hover {
+            color: var(--text-pure-white);
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .nav-links li:last-child {
+            margin-left: 10px;
+        }
+
+        .login-btn {
+            padding: 10px 25px;
+            border: 1px solid var(--blood-coagulated);
+            border-radius: 3px;
+            color: var(--text-pure-white);
+            background: rgba(158, 0, 0, 0.1);
+        }
+
+        .login-btn::after {
+            display: none;
+        }
+
+        .login-btn:hover {
+            background: var(--blood-coagulated);
+            border-color: var(--blood-plasma);
+            box-shadow: var(--vfx-blood-glow);
+            transform: translateY(-2px);
+        }
+
+        /* --- ADDED: USER PROFILE CSS FOR NAVBAR --- */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-circle {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--blood-coagulated), var(--blood-red-deep));
+            color: var(--text-pure-white);
+            border: 1px solid var(--blood-plasma);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: var(--glow-red);
+            text-transform: uppercase;
+        }
+
+        .logout-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: var(--transition-smooth);
+        }
+
+        .logout-btn:hover {
+            color: var(--blood-plasma);
+            text-shadow: var(--vfx-blood-glow);
+        }
+
+        /* ==========================================================================
+           3. HERO SECTION & VFX BLOOD ANIMATION
+           ========================================================================== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .version-tag {
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .bloody-title-container {
+            position: relative;
+            margin-bottom: 30px;
+            pointer-events: none; /* Allows clicks to pass through if it overlaps */
+        }
+
+        .bloody-title {
+            font-family: var(--font-heading);
+            font-size: 6rem;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, var(--text-main) 0%, #ffaaaa 40%, var(--blood-red-deep) 80%, var(--bg-dark) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            filter: drop-shadow(0 0 20px rgba(138, 3, 3, 0.6));
+        }
+
+        .bloody-title::before {
+            content: "BOOKING WITH MISHRA";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, var(--blood-red-bright) 50%, var(--blood-red-deep) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            z-index: 3;
+            animation: bloodFill 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.8;
+            background-size: 100% 200%;
+        }
+
+        .drip {
+            position: absolute;
+            background: var(--blood-red-bright);
+            width: 4px;
+            border-radius: 0 0 5px 5px;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--blood-red-bright);
+            animation: dripFall var(--duration) infinite ease-in;
+            opacity: 0;
+        }
+
+        .drip:nth-child(1) { left: 15%; top: 60%; height: 20px; --duration: 3s; animation-delay: 0.5s; }
+        .drip:nth-child(2) { left: 45%; top: 80%; height: 35px; --duration: 4s; animation-delay: 1.2s; }
+        .drip:nth-child(3) { left: 70%; top: 50%; height: 25px; --duration: 3.5s; animation-delay: 2.1s; }
+        .drip:nth-child(4) { left: 88%; top: 70%; height: 40px; --duration: 5s; animation-delay: 0.8s; }
+
+        .hero p {
+            max-width: 700px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            animation: slideUp 1.5s ease-out;
+        }
+
+        /* BUTTON FIXES: Added Z-index & Pointer events to make them clickable */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            animation: slideUp 2s ease-out;
+            position: relative;
+            z-index: 100; /* Forces buttons above all blood animations */
+            pointer-events: auto; /* Ensures they can be clicked */
+        }
+
+        /* Link buttons converted from <button> to <a> for proper routing */
+        .btn {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            padding: 15px 40px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--blood-red-deep);
+            color: var(--text-main);
+            box-shadow: 0 0 15px rgba(138, 3, 3, 0.6);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--blood-red-bright);
+            box-shadow: var(--glow-red-intense);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--blood-red-deep);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(138, 3, 3, 0.1);
+            border-color: var(--blood-red-bright);
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2), var(--glow-red);
+            transform: translateY(-2px);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::after { 
+            left: 150%; 
+        }
+
+        /* ==========================================================================
+           4. PREMIUM SERVICES SECTION
+           ========================================================================== */
+        .services-section {
+            padding: 100px 50px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0d0000 50%, var(--bg-dark) 100%);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--blood-red-bright);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            text-shadow: var(--glow-red);
+            letter-spacing: 4px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(10, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 50px 30px;
+            text-align: center;
+            border-radius: 5px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blood-red-bright), transparent);
+            transform: scaleX(0);
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover {
+            border-color: rgba(138, 3, 3, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(138, 3, 3, 0.1);
+            transform: translateY(-10px);
+        }
+
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-card.active {
+            border-color: var(--blood-red-deep);
+            box-shadow: var(--glow-red);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--blood-red-bright);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255,0,0,0.5));
+            transition: var(--transition-smooth);
+        }
+
+        .service-card:hover .service-icon { transform: scale(1.1); }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           5. VIP EVENTS GALLERY
+           ========================================================================== */
+        .vip-events {
+            padding: 100px 50px;
+            background: #000;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .event-item {
+            position: relative;
+            height: 300px;
+            background: #111;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #222;
+            cursor: pointer;
+        }
+
+        .event-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(5,0,0,0.9) 0%, transparent 100%);
+            transition: var(--transition-smooth);
+        }
+
+        .event-item:hover::after { background: linear-gradient(0deg, rgba(138,3,3,0.8) 0%, transparent 100%); }
+
+        .event-info {
+            position: absolute;
+            bottom: -50px;
+            left: 20px;
+            z-index: 2;
+            transition: var(--transition-smooth);
+        }
+
+        .event-item:hover .event-info { bottom: 20px; }
+
+        .event-info h4 { color: #fff; font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 5px; }
+        .event-info span { color: var(--blood-red-bright); font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* ==========================================================================
+           6. FOOTER
+           ========================================================================== */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #050000;
+            border-top: 1px solid rgba(138, 3, 3, 0.2);
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            color: var(--blood-red-deep);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .footer-text { color: var(--text-muted); font-size: 0.8rem; }
+
+        /* ==========================================================================
+           7. KEYFRAMES & ANIMATIONS
+           ========================================================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bloodFill {
+            0% { background-position: 0% -100%; opacity: 0; filter: hue-rotate(0deg); }
+            20% { opacity: 1; }
+            50% { background-position: 0% 100%; filter: hue-rotate(-10deg); }
+            80% { opacity: 1; }
+            100% { background-position: 0% 200%; opacity: 0; filter: hue-rotate(0deg); }
+        }
+
+        @keyframes dripFall {
+            0% { top: 30%; height: 10px; opacity: 1; transform: scaleY(1); }
+            80% { top: 90%; height: 50px; opacity: 0.5; transform: scaleY(2); }
+            100% { top: 100%; height: 5px; opacity: 0; transform: scaleY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .premium-nav { padding: 0 20px; }
+            .nav-links { display: none; }
+            .bloody-title { font-size: 3.5rem; }
+            .hero p { font-size: 0.9rem; }
+            .btn-group { flex-direction: column; }
+            .event-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="premium-nav">
+        <div class="nav-logo">
+            Booking With Mishra
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="{% url 'services' %}" class="nav-item">Services</a>
+            </li>
+            <li>
+                <a href="/movies/" class="nav-item">Movies</a>
+            </li>
+            <li>
+                <a href="{% url 'events' %}" class="nav-item">VIP Events</a>
+            </li>
+            
+            <li>
+                {% if user.is_authenticated %}
+                <div class="user-profile">
+                    <div class="user-circle">
+                        {{ user.username|first|upper }}
+                    </div>
+                    <a href="/logout/" class="logout-btn">
+                        Logout
+                    </a>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-item login-btn">
+                    LOGIN
+                </a>
+                {% endif %}
+            </li>
+
+        </ul>
+    </nav>
+
+    <header class="hero" id="hero">
+        <div class="version-tag">V 6.0 | Bloody Mary Edition</div>
+        
+        <div class="bloody-title-container">
+            <div class="drip"></div>
+            <div class="drip"></div>
+            <div class="drip"></div>
+            <div class="drip"></div>
+            
+            <h1 class="bloody-title">BOOKING<br>WITH<br>MISHRA</h1>
+        </div>
+
+        <p>Experience the darkest premium booking platform. Reserve movie tickets, VIP events, luxury services and exclusive experiences.</p>
+        
+        <div class="btn-group">
+            <a href="{% url 'services' %}" class="btn btn-primary">
+                Summon Services
+            </a>
+            <a href="/movies/" class="btn btn-secondary">
+                Book Tickets
+            </a>
+        </div>
+    </header>
+
+    <section class="services-section" id="services">
+        <h2 class="section-title">Premium Services</h2>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fa-solid fa-bolt service-icon"></i>
+                <h3>Electrician</h3>
+                <p>Elite electrical support available 24/7. Immediate dispatch for luxury homes.</p>
+            </div>
+            
+            <div class="service-card active">
+                <i class="fa-solid fa-wrench service-icon"></i>
+                <h3>Plumber</h3>
+                <p>Luxury home maintenance services. Flawless execution and zero mess.</p>
+            </div>
+            
+            <div class="service-card">
+                <i class="fa-solid fa-book service-icon"></i>
+                <h3>Tutor</h3>
+                <p>Personal premium learning experience. Exclusive mentoring programs.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="vip-events" id="events">
+        <h2 class="section-title" style="font-size: 2rem;">Exclusive Gatherings</h2>
+        <div class="event-grid">
+            <div class="event-item">
+                <div class="event-info">
+                    <h4>Underground Symphony</h4>
+                    <span>INVITE ONLY</span>
+                </div>
+            </div>
+            <div class="event-item">
+                <div class="event-info">
+                    <h4>Midnight Premiere</h4>
+                    <span>VVIP ACCESS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">BWM</div>
+        <div class="footer-text">© 2026 MISHRA OS PROTOCOL. All Rights Reserved.</div>
+    </footer>
+
+</body>
+</html>

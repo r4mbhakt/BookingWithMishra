@@ -1,0 +1,914 @@
+/* ==========================================================================
+   1. CORE ARCHITECTURE & ADVANCED COLOR TOKENS (CINEMATIC DESIGN SYSTEM)
+   ========================================================================== */
+:root {
+    /* Absolute Dark Palette */
+    --bg-pure-black: #020000;
+    --bg-matrix-dark: #050000;
+    --bg-velvet-layer: #0c0101;
+    --bg-card-surface: rgba(10, 2, 2, 0.7);
+    
+    /* Blood Fluid Spectrum */
+    --blood-plasma: #ff0808;
+    --blood-coagulated: #9e0000;
+    --blood-arterial: #610000;
+    --blood-shadow: #210000;
+    
+    /* Premium Text & Accents */
+    --text-pure-white: #ffffff;
+    --text-platinum: #e5e5e5;
+    --text-ghostly: rgba(255, 255, 255, 0.4);
+    --text-crimson-mute: #8c4141;
+    
+    /* Micro-Typography Fonts */
+    --font-cinzel: 'Cinzel Decorative', cursive;
+    --font-montserrat: 'Montserrat', sans-serif;
+    
+    /* Advanced Physics Animations */
+    --ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-heavy-drip: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    --transition-premium: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* VFX Glow Filters */
+    --vfx-blood-glow: 0 0 15px rgba(255, 8, 8, 0.6), 0 0 35px rgba(158, 0, 0, 0.4);
+    --vfx-intense-pulse: 0 0 25px #ff0808, 0 0 50px #9e0000, 0 0 80px rgba(255, 8, 8, 0.8);
+    --vfx-inner-shadow: inset 0 0 15px rgba(158, 0, 0, 0.3);
+}
+
+/* Global Reset & Performance Optimization */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--bg-pure-black);
+    color: var(--text-pure-white);
+    font-family: var(--font-montserrat);
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 50% 30%, var(--bg-velvet-layer) 0%, var(--bg-pure-black) 70%),
+        linear-gradient(rgba(5, 0, 0, 0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(5, 0, 0, 0.5) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
+    background-attachment: fixed;
+}
+
+/* Premium OS Style Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-pure-black);
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--blood-arterial), var(--blood-plasma));
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--blood-plasma);
+    box-shadow: var(--vfx-blood-glow);
+}
+
+/* ==========================================================================
+   2. 10X LIQUID BLOOD FLOW ENGINE & DRIPIFY SYSTEM
+   ========================================================================== */
+.bloody-title-container {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+    background: transparent;
+}
+
+/* Main Text Jisme Blood Flow Hoga */
+.bloody-title {
+    font-family: var(--font-cinzel);
+    font-size: 5.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    line-height: 1.1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+    background: linear-gradient(180deg, 
+        var(--text-pure-white) 0%, 
+        var(--text-platinum) 35%, 
+        var(--blood-plasma) 65%, 
+        var(--blood-coagulated) 100%);
+    background-size: 100% 200%;
+    background-position: 50% 0%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 15px rgba(158, 0, 0, 0.5));
+    animation: textLiquidFlow 8s var(--ease-fluid) infinite alternate;
+}
+
+/* Continuous Blood Bleeding Layer Overlay */
+.bloody-title::after {
+    content: "BOOKING WITH MISHRA";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    background: linear-gradient(180deg, 
+        transparent 10%, 
+        rgba(255, 8, 8, 0.8) 40%, 
+        var(--blood-coagulated) 80%, 
+        var(--blood-shadow) 100%);
+    background-size: 100% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    z-index: 5;
+    animation: overlayBleedEffect 6s ease-in-out infinite;
+    mask-image: linear-gradient(to bottom, black, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+/* Multi-Point Real-time CSS Dripping Nodes */
+.blood-drip-system {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.drip-node {
+    position: absolute;
+    background: linear-gradient(180deg, var(--blood-plasma), var(--blood-coagulated));
+    width: 5px;
+    border-radius: 0 0 50% 50%;
+    box-shadow: 0 0 8px var(--blood-plasma);
+    opacity: 0;
+    transform-origin: top center;
+}
+
+/* High Density Custom Animation Co-ordinates */
+.drip-node:nth-child(1) { left: 12%; top: 45%; height: 25px; animation: extremeDrip 3.5s var(--ease-heavy-drip) infinite; animation-delay: 0.2s; }
+.drip-node:nth-child(2) { left: 28%; top: 75%; height: 40px; animation: extremeDrip 4.2s var(--ease-heavy-drip) infinite; animation-delay: 1.5s; }
+.drip-node:nth-child(3) { left: 45%; top: 55%; height: 30px; animation: extremeDrip 3.8s var(--ease-heavy-drip) infinite; animation-delay: 0.8s; }
+.drip-node:nth-child(4) { left: 62%; top: 80%; height: 50px; animation: extremeDrip 5s var(--ease-heavy-drip) infinite; animation-delay: 2.3s; }
+.drip-node:nth-child(5) { left: 78%; top: 40%; height: 20px; animation: extremeDrip 3s var(--ease-heavy-drip) infinite; animation-delay: 0.1s; }
+.drip-node:nth-child(6) { left: 91%; top: 65%; height: 35px; animation: extremeDrip 4.6s var(--ease-heavy-drip) infinite; animation-delay: 1.9s; }
+
+/* ==========================================================================
+   3. ULTRA-PREMIUM INTERACTIVE LAYER (CARDS & BUTTONS)
+   ========================================================================== */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1300px;
+    margin: 80px auto;
+    padding: 0 40px;
+}
+
+/* Glassmorphism Surface with Blood Border Glow */
+.premium-card {
+    background: var(--bg-card-surface);
+    border: 1px solid rgba(158, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    transition: var(--transition-premium);
+}
+
+.premium-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 8, 8, 0.05), transparent);
+    transition: 0.6s ease;
+}
+
+/* Hover Physics */
+.premium-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    border-color: rgba(255, 8, 8, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), var(--vfx-inner-shadow);
+}
+
+.premium-card:hover::before {
+    left: 100%;
+}
+
+/* Active State Design (Jo Screenshot me Selected Component hai) */
+.premium-card.selected-tier {
+    border: 1px solid var(--blood-plasma);
+    box-shadow: var(--vfx-blood-glow), var(--vfx-inner-shadow);
+    background: linear-gradient(145deg, rgba(12, 1, 1, 0.9) 0%, rgba(5, 0, 0, 1) 100%);
+}
+
+.premium-card.selected-tier::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    background: linear-gradient(to bottom, var(--blood-plasma), transparent) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    pointer-events: none;
+}
+
+/* VFX Styled Icons */
+.vfx-icon {
+    font-size: 3.2rem;
+    color: var(--blood-plasma);
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 12px rgba(255, 8, 8, 0.7));
+    transition: var(--transition-premium);
+}
+
+.premium-card:hover .vfx-icon {
+    transform: rotateY(180deg) scale(1.05);
+    color: var(--text-pure-white);
+    filter: drop-shadow(0 0 20px var(--blood-plasma));
+}
+
+.card-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.card-desc {
+    color: var(--text-ghostly);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* Premium Heavy Action Buttons */
+.summon-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.vfx-btn {
+    position: relative;
+    padding: 18px 45px;
+    font-family: var(--font-montserrat);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--transition-premium);
+}
+
+.vfx-btn-solid {
+    background: var(--blood-coagulated);
+    color: var(--text-pure-white);
+    box-shadow: 0 5px 20px rgba(158, 0, 0, 0.4);
+}
+
+.vfx-btn-solid:hover {
+    background: var(--blood-plasma);
+    box-shadow: var(--vfx-intense-pulse);
+    transform: translateY(-3px);
+}
+
+.vfx-btn-outline {
+    background: transparent;
+    color: var(--text-pure-white);
+    border: 1px solid var(--blood-arterial);
+}
+
+.vfx-btn-outline:hover {
+    border-color: var(--blood-plasma);
+    background: rgba(158, 0, 0, 0.08);
+    box-shadow: var(--vfx-blood-glow);
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   4. ADVANCED MATHEMATICAL PHYSICS KEYFRAMES
+   ========================================================================== */
+@keyframes textLiquidFlow {
+    0% {
+        background-position: 50% 0%;
+    }
+    100% {
+        background-position: 50% 100%;
+    }
+}
+
+@keyframes overlayBleedEffect {
+    0%, 100% {
+        background-position: 0% 0%;
+        filter: hue-rotate(0deg) contrast(1);
+    }
+    50% {
+        background-position: 0% 100%;
+        filter: hue-rotate(-15deg) contrast(1.2);
+    }
+}
+
+@keyframes extremeDrip {
+    0% {
+        top: 20%;
+        height: 5px;
+        opacity: 0;
+        transform: scaleX(1) scaleY(1);
+    }
+    10% {
+        opacity: 1;
+        transform: scaleX(1.3) scaleY(0.8);
+    }
+    30% {
+        height: 35px;
+        transform: scaleX(0.8) scaleY(1.2);
+    }
+    60% {
+        top: 85%;
+        height: 60px;
+        opacity: 0.8;
+        transform: scaleX(0.5) scaleY(1.8);
+    }
+    85% {
+        top: 100%;
+        height: 15px;
+        opacity: 0.2;
+        transform: scaleX(1.5) scaleY(0.4);
+    }
+    100% {
+        top: 105%;
+        height: 0px;
+        opacity: 0;
+        transform: scaleX(1) scaleY(1);
+    }
+}
+
+/* Responsive Fluid Breakpoints */
+@media (max-width: 900px) {
+    .bloody-title {
+        font-size: 3.8rem;
+    }
+    .services-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    .summon-btn-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .vfx-btn {
+        width: 100%;
+        max-width: 350px;
+    }
+}
+/* ==========================================================================
+   BLOODY MARY EDITION - SEAT BOOKING PANEL CORE CSS
+   ========================================================================== */
+
+/* 1. MISHRA OS GLOBAL VARIABLES */
+:root {
+    --pure-black: #000000;
+    --abyss-black: #050000;
+    --card-bg: rgba(10, 2, 2, 0.85);
+    
+    --blood-plasma: #ff0808;
+    --blood-coagulated: #9e0000;
+    --blood-arterial: #610000;
+    --seat-occupied: #1a0505;
+    
+    --text-pure-white: #ffffff;
+    --text-muted: #888888;
+    
+    --font-cinzel: 'Cinzel Decorative', cursive;
+    --font-monty: 'Montserrat', sans-serif;
+    
+    --vfx-glow: 0 0 15px rgba(255, 8, 8, 0.5), 0 0 30px rgba(158, 0, 0, 0.4);
+}
+
+/* 2. BACKGROUND & CENTERING FIX */
+body {
+    background-color: var(--pure-black);
+    color: var(--text-pure-white);
+    font-family: var(--font-monty);
+    background-image: radial-gradient(circle at 50% 0%, #1a0000 0%, var(--pure-black) 70%);
+    background-attachment: fixed;
+}
+
+/* 3. THE GLASSMORPHIC COMMAND CENTER */
+.booking-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 120px auto 50px auto;
+    text-align: center;
+    background: var(--card-bg);
+    border: 1px solid rgba(158, 0, 0, 0.3);
+    border-radius: 8px;
+    padding-bottom: 50px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(158,0,0,0.1);
+}
+
+/* 4. CINEMATIC MOVIE IMAGE & TITLE */
+.booking-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    margin: 0;
+    box-shadow: none;
+    filter: grayscale(30%) contrast(110%);
+    /* Adding a bottom fade to blend with dark background */
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
+
+.booking-title {
+    font-family: var(--font-cinzel);
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--text-pure-white);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: var(--vfx-glow), 0 5px 15px #000;
+    margin-top: -60px; /* Pull text up over the faded image */
+    position: relative;
+    z-index: 5;
+}
+
+/* 5. PRICING & FORM CONTROLS */
+.price-tag {
+    color: var(--blood-plasma);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 20px 0 40px 0;
+    text-shadow: 0 0 10px rgba(255, 8, 8, 0.3);
+}
+
+.booking-container form {
+    padding: 0 40px;
+}
+
+.booking-container input[type="text"],
+.booking-container input[type="email"] {
+    width: 300px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-bottom: 2px solid var(--blood-arterial);
+    padding: 15px 20px;
+    margin: 10px;
+    font-family: var(--font-monty);
+    font-size: 0.95rem;
+    color: var(--text-pure-white);
+    border-radius: 0;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.booking-container input::placeholder { 
+    color: var(--text-muted); 
+    letter-spacing: 1px; 
+}
+
+.booking-container input:focus {
+    border-bottom-color: var(--blood-plasma);
+    background: rgba(15, 0, 0, 0.8);
+    box-shadow: 0 10px 15px -5px rgba(255, 8, 8, 0.1);
+}
+
+/* 6. VVIP SEAT MATRIX (THE MAGIC) */
+.seat-layout {
+    margin-top: 50px;
+    user-select: none;
+    line-height: 1.8;
+}
+
+/* The Base Seat Styling */
+.seat {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    margin: 5px;
+}
+
+/* Hide the ugly default HTML checkbox completely */
+.seat input[type="checkbox"] {
+    display: none;
+}
+
+/* The Custom Chair Design */
+.seat span, .seat.occupied {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 40px;
+    background: rgba(20, 2, 2, 0.8);
+    border: 1px solid var(--blood-arterial);
+    /* 3D Theatre Seat Shape */
+    border-radius: 5px 5px 12px 12px; 
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Hover Effect for Available Seats */
+.seat:hover span {
+    border-color: var(--blood-plasma);
+    color: var(--text-pure-white);
+    box-shadow: 0 0 10px rgba(255, 8, 8, 0.3);
+    transform: translateY(-2px);
+}
+
+/* EXACT SELECTION FIX: When checkbox is checked, glow the seat */
+.seat input[type="checkbox"]:checked + span {
+    background: var(--blood-plasma);
+    color: var(--pure-black); /* Dark text on bright red bg */
+    font-weight: 900;
+    border-color: var(--blood-plasma);
+    box-shadow: var(--vfx-glow);
+    transform: scale(1.1);
+}
+
+/* Occupied/Booked Seats */
+.seat.occupied, .occupied {
+    background: var(--seat-occupied);
+    border-color: #2a0a0a;
+    color: #333333;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* 7. CONFIRM BUTTON */
+.confirm-btn {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 400px;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--blood-coagulated), var(--blood-arterial));
+    color: var(--text-pure-white);
+    font-family: var(--font-monty);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.confirm-btn:hover {
+    background: linear-gradient(135deg, var(--blood-plasma), var(--blood-coagulated));
+    box-shadow: var(--vfx-glow);
+    transform: translateY(-2px);
+}
+
+/* Mobile Fixes */
+@media (max-width: 768px) {
+    .booking-title { font-size: 2rem; margin-top: -40px;}
+    .booking-container input[type="text"],
+    .booking-container input[type="email"] { width: 90%; }
+    .seat span, .seat.occupied { width: 35px; height: 32px; font-size: 0.75rem; }
+}
+/* ==========================================================================
+   BLOODY MARY EDITION - SECURE PAYMENT & SUCCESS MODULES
+   ========================================================================== */
+
+/* 1. THE VVIP TERMINAL BOXES (Glassmorphism + Neon Glow) */
+.payment-box,
+.success-box {
+    width: 90%;
+    max-width: 550px;
+    margin: 120px auto;
+    padding: 60px 40px;
+    background: rgba(10, 2, 2, 0.85); /* Deep translucent dark */
+    border: 1px solid rgba(158, 0, 0, 0.4);
+    border-radius: 8px; /* Sharp premium edges instead of round 20px */
+    text-align: center;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(158, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    animation: terminalPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Top Laser Edge for that Hacker/Elite feel */
+.payment-box::before,
+.success-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, #ff0808, transparent);
+    box-shadow: 0 0 15px rgba(255, 8, 8, 0.8);
+}
+
+/* 2. CINEMATIC TYPOGRAPHY */
+.payment-box h1,
+.success-box h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 2.2rem;
+    color: #ffffff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 8, 8, 0.4);
+}
+
+.payment-box h2,
+.success-box h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #ff0808; /* Blood Plasma color */
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 35px;
+}
+
+/* 3. ULTRA-CLEAN HACKER INPUTS */
+.payment-box input {
+    width: 100%;
+    background: rgba(5, 0, 0, 0.7);
+    border: none;
+    border-bottom: 2px solid #610000; /* Arterial dark red */
+    padding: 16px 20px;
+    margin: 10px 0 20px 0;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.payment-box input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+}
+
+/* Input Focus VFX */
+.payment-box input:focus {
+    border-bottom-color: #ff0808;
+    background: rgba(15, 0, 0, 0.9);
+    box-shadow: 0 10px 15px -5px rgba(255, 8, 8, 0.15);
+}
+
+/* 4. ENTRY ANIMATION */
+@keyframes terminalPop {
+    0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+/* ==========================================================================
+   BLOODY MARY EDITION - VVIP QR CODE TERMINAL
+   ========================================================================== */
+
+.qr-image {
+    width: 250px;
+    margin: 30px auto;
+    
+    /* Safest background for QR scanners */
+    background: #ffffff; 
+    padding: 15px;
+    
+    /* Sharp premium edges instead of round bubbly ones */
+    border-radius: 6px; 
+    
+    /* VVIP Layered Blood Glow instead of cheap flat red */
+    border: 2px solid #8a0303;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 8, 8, 0.4), 
+        0 0 40px rgba(138, 3, 3, 0.2);
+        
+    /* Interaction Physics */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Hover effect: Ignites the plasma glow and pops up */
+.qr-image:hover {
+    transform: scale(1.08) translateY(-5px);
+    border-color: #ff0808;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(255, 8, 8, 0.6), 
+        0 0 60px rgba(138, 3, 3, 0.4);
+}
+
+/* ---------------------------------------------------
+   CYBERPUNK LASER SCANNER EFFECT
+   --------------------------------------------------- */
+.qr-image::after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #ff0808;
+    box-shadow: 0 0 15px #ff0808, 0 0 30px #ff0808;
+    /* The laser goes up and down over the QR code */
+    animation: qrScanner 3s ease-in-out infinite alternate;
+    pointer-events: none; /* Allows user to right-click and save QR image */
+    border-radius: 50%;
+}
+
+@keyframes qrScanner {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { top: 100%; opacity: 0; }
+}
+/* ==========================================================================
+   BLOODY MARY EDITION - AUTHENTICATION & USER PROFILE CSS
+   ========================================================================== */
+
+/* 1. NAVBAR USER PROFILE AVATAR */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #ffffff;
+}
+
+.user-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9e0000, #3a0000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid #ff0808;
+    box-shadow: 0 0 15px rgba(255, 8, 8, 0.5);
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-circle:hover {
+    box-shadow: 0 0 25px rgba(255, 8, 8, 0.8);
+    transform: scale(1.05);
+}
+
+/* 2. AUTHENTICATION BACKGROUND & LAYOUT */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Automatically stacks on mobile */
+    gap: 50px;
+    background-color: #000000;
+    background-image: radial-gradient(circle at 50% 50%, #150000 0%, #000000 80%);
+    padding: 120px 20px 50px 20px; /* Top padding protects content from hiding behind fixed navbar */
+}
+
+/* 3. GLASSMORPHIC LOGIN/SIGNUP BOXES */
+.login-box {
+    width: 100%;
+    max-width: 450px;
+    padding: 50px 40px;
+    background: rgba(10, 2, 2, 0.85);
+    border: 1px solid rgba(158, 0, 0, 0.4);
+    border-radius: 8px; /* Sharp corporate look */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(158,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+/* Red Laser Edge on top of the box */
+.login-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, #ff0808, transparent);
+}
+
+/* Hover Physics for the entire box */
+.login-box:hover {
+    border-color: #ff0808;
+    box-shadow: 0 30px 60px rgba(0,0,0,1), 0 0 25px rgba(255,8,8,0.2);
+    transform: translateY(-5px);
+}
+
+/* 4. CINEMATIC TYPOGRAPHY */
+.login-box h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 2.2rem;
+    color: #ff0808;
+    text-align: center;
+    letter-spacing: 3px;
+    margin-bottom: 35px;
+    text-shadow: 0 0 10px rgba(255,8,8,0.3);
+    text-transform: uppercase;
+}
+
+/* 5. ELITE HACKER INPUT FIELDS */
+.login-box input {
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 25px;
+    background: rgba(5, 0, 0, 0.7);
+    border: none;
+    border-bottom: 2px solid #610000;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.login-box input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+}
+
+/* Input glows intense red when typed into */
+.login-box input:focus {
+    border-bottom-color: #ff0808;
+    background: rgba(15, 0, 0, 0.9);
+    box-shadow: 0 10px 15px -5px rgba(255, 8, 8, 0.15);
+}
+
+/* 6. VVIP ACTION BUTTON */
+.login-box button {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #9e0000, #610000);
+    border: 1px solid #ff0808;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.login-box button:hover {
+    background: linear-gradient(135deg, #ff0808, #9e0000);
+    box-shadow: 0 0 15px rgba(255, 8, 8, 0.5), 0 0 30px rgba(158, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Cyber Scanner Sweep Animation on Button */
+.login-box button::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 30%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-25deg);
+    animation: authSweep 4s infinite;
+}
+
+@keyframes authSweep {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+}

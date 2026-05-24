@@ -1,0 +1,360 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication | Bloody Mary Edition</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+
+        :root {
+            --pure-black: #000000;
+            --card-bg: rgba(10, 2, 2, 0.85);
+            --blood-plasma: #ff0808;
+            --blood-coagulated: #9e0000;
+            --blood-arterial: #610000;
+            --text-pure-white: #ffffff;
+            --text-muted: #888888;
+            --font-cinzel: 'Cinzel Decorative', cursive;
+            --font-monty: 'Montserrat', sans-serif;
+            --vfx-glow: 0 0 15px rgba(255, 8, 8, 0.5),
+                         0 0 40px rgba(158, 0, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            background-color: var(--pure-black);
+            color: var(--text-pure-white);
+            font-family: var(--font-monty);
+            background-image:
+                radial-gradient(circle at 50% 50%, #150000 0%, var(--pure-black) 80%);
+            background-attachment: fixed;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .master-title {
+            font-family: var(--font-cinzel);
+            font-size: 3.5rem;
+            color: var(--text-pure-white);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: var(--vfx-glow), 0 5px 15px #000;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .login-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .login-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(158, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 50px 40px;
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 50px rgba(0,0,0,0.9),
+                inset 0 0 20px rgba(158,0,0,0.1);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--blood-plasma),
+                    transparent
+                );
+        }
+
+        .login-box h1 {
+            font-family: var(--font-cinzel);
+            font-size: 2rem;
+            color: var(--blood-plasma);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group i {
+            position: absolute;
+
+            left: 15px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--text-muted);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+
+            width: 100%;
+
+            background: rgba(5, 0, 0, 0.7);
+
+            border: none;
+            border-bottom: 2px solid var(--blood-arterial);
+
+            padding: 16px 15px 16px 45px;
+
+            font-family: var(--font-monty);
+            font-size: 0.95rem;
+
+            color: var(--text-pure-white);
+
+            outline: none;
+
+            transition: 0.3s ease;
+
+            box-sizing: border-box;
+
+            border-radius: 4px;
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+        }
+
+        input:focus {
+            border-bottom-color: var(--blood-plasma);
+
+            background: rgba(15, 0, 0, 0.9);
+
+            box-shadow:
+                0 10px 15px -5px rgba(255, 8, 8, 0.15);
+        }
+
+        button[type="submit"] {
+
+            margin-top: 10px;
+
+            width: 100%;
+
+            padding: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blood-coagulated),
+                    var(--blood-arterial)
+                );
+
+            color: var(--text-pure-white);
+
+            font-family: var(--font-monty);
+            font-size: 1rem;
+            font-weight: 700;
+
+            letter-spacing: 3px;
+            text-transform: uppercase;
+
+            border: 1px solid var(--blood-plasma);
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            transition: all 0.4s ease;
+        }
+
+        button[type="submit"]:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blood-plasma),
+                    var(--blood-coagulated)
+                );
+
+            box-shadow: var(--vfx-glow);
+
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 950px) {
+
+            .login-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .master-title {
+                font-size: 2.5rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1 class="master-title">
+        BOOKING WITH MISHRA
+    </h1>
+
+    <div class="login-container">
+
+        <!-- LOGIN -->
+
+        <div class="login-box">
+
+            <h1>LOGIN</h1>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="action" value="login">
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="USERNAME"
+                        required
+                    >
+
+                    <i class="fa-solid fa-user-astronaut"></i>
+
+                </div>
+
+                <div class="input-group">
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="PASSWORD"
+                        required
+                    >
+
+                    <i class="fa-solid fa-key"></i>
+
+                </div>
+
+                <button type="submit">
+                    INITIALIZE LOGIN
+                </button>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- SIGNUP -->
+
+        <div class="login-box">
+
+            <h1>SIGN UP</h1>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="action" value="register">
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="CHOOSE USERNAME"
+                        required
+                    >
+
+                    <i class="fa-solid fa-user-shield"></i>
+
+                </div>
+
+                <div class="input-group">
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="SECURE EMAIL"
+                        required
+                    >
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                </div>
+
+                <div class="input-group">
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="CREATE PASSWORD"
+                        required
+                    >
+
+                    <i class="fa-solid fa-lock"></i>
+
+                </div>
+
+                <button type="submit">
+                    CREATE ACCOUNT
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

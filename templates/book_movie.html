@@ -1,0 +1,354 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summon Tickets | Booking With Mishra</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* ==========================================================================
+           BLOODY MARY EDITION - SEAT BOOKING PANEL
+           ========================================================================== */
+        :root {
+            --pure-black: #000000;
+            --abyss-black: #050000;
+            --card-bg: rgba(10, 2, 2, 0.85);
+            --blood-plasma: #ff0808;
+            --blood-coagulated: #9e0000;
+            --blood-arterial: #610000;
+            --seat-occupied: #1a0505;
+            --text-pure-white: #ffffff;
+            --text-muted: #888888;
+            --font-cinzel: 'Cinzel Decorative', cursive;
+            --font-monty: 'Montserrat', sans-serif;
+            --vfx-glow: 0 0 15px rgba(255, 8, 8, 0.5), 0 0 30px rgba(158, 0, 0, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 50px 20px;
+            background-color: var(--pure-black);
+            color: var(--text-pure-white);
+            font-family: var(--font-monty);
+            background-image: radial-gradient(circle at 50% 0%, #1a0000 0%, var(--pure-black) 70%);
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* ---------------------------------------------------
+           THE GLASSMORPHIC COMMAND CENTER
+           --------------------------------------------------- */
+        .booking-container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 1px solid rgba(158, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(158,0,0,0.1);
+        }
+
+        /* ---------------------------------------------------
+           CINEMATIC MOVIE HEADER
+           --------------------------------------------------- */
+        .movie-header-banner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        .booking-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(110%);
+        }
+
+        /* Gradient fade into the dark form */
+        .movie-header-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--card-bg) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .booking-title {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: var(--font-cinzel);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-pure-white);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: var(--vfx-glow), 0 5px 15px #000;
+            z-index: 2;
+            margin: 0;
+        }
+
+        /* ---------------------------------------------------
+           PRICING & FORM
+           --------------------------------------------------- */
+        .price-tag {
+            text-align: center;
+            color: var(--blood-plasma);
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(255, 8, 8, 0.3);
+        }
+
+        form {
+            padding: 0 50px 50px 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            border-bottom: 2px solid var(--blood-arterial);
+            padding: 15px 20px;
+            font-family: var(--font-monty);
+            font-size: 0.95rem;
+            color: var(--text-pure-white);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder { color: var(--text-muted); letter-spacing: 1px; }
+
+        input:focus {
+            border-bottom-color: var(--blood-plasma);
+            background: rgba(15, 0, 0, 0.8);
+            box-shadow: 0 10px 15px -5px rgba(255, 8, 8, 0.1);
+        }
+
+        /* ---------------------------------------------------
+           VVIP SEAT MATRIX (THE MAGIC)
+           --------------------------------------------------- */
+        .cinema-screen-container {
+            text-align: center;
+            margin: 40px 0 20px 0;
+        }
+
+        .cinema-screen {
+            height: 60px;
+            width: 80%;
+            margin: 0 auto;
+            border-top: 3px solid var(--blood-plasma);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            box-shadow: 0 -15px 20px -10px rgba(255, 8, 8, 0.4);
+            position: relative;
+        }
+
+        .cinema-screen::after {
+            content: 'MISHRA OS SCREEN';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--blood-coagulated);
+            letter-spacing: 5px;
+            font-weight: 700;
+        }
+
+        .seat-layout {
+            text-align: center;
+            margin-bottom: 30px;
+            user-select: none;
+            line-height: 1.8; /* spacing between rows */
+        }
+
+        /* The Base Seat Styling */
+        .seat {
+            display: inline-block;
+            margin: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Hide the ugly default HTML checkbox completely */
+        .seat input[type="checkbox"] {
+            display: none;
+        }
+
+        /* The Custom Chair Design */
+        .seat span, .seat.occupied {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 40px;
+            background: rgba(20, 2, 2, 0.8);
+            border: 1px solid var(--blood-arterial);
+            /* Making it look like a physical theater seat */
+            border-radius: 5px 5px 12px 12px; 
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Hover Effect for Available Seats */
+        .seat:hover span {
+            border-color: var(--blood-plasma);
+            color: var(--text-pure-white);
+            box-shadow: 0 0 10px rgba(255, 8, 8, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* EXACT SELECTION FIX: When checkbox is checked, style the span next to it */
+        .seat input[type="checkbox"]:checked + span {
+            background: var(--blood-plasma);
+            color: var(--pure-black); /* Dark text on bright red bg */
+            font-weight: 900;
+            border-color: var(--blood-plasma);
+            box-shadow: var(--vfx-glow);
+            transform: scale(1.1);
+        }
+
+        /* Occupied/Booked Seats */
+        .seat.occupied {
+            background: var(--seat-occupied);
+            border-color: #2a0a0a;
+            color: #333333;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* ---------------------------------------------------
+           LEGEND & CONFIRM BUTTON
+           --------------------------------------------------- */
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .legend-box { width: 20px; height: 18px; border-radius: 3px 3px 6px 6px; }
+        .lb-avail { background: rgba(20, 2, 2, 0.8); border: 1px solid var(--blood-arterial); }
+        .lb-select { background: var(--blood-plasma); box-shadow: 0 0 8px var(--blood-plasma); }
+        .lb-occ { background: var(--seat-occupied); border: 1px solid #2a0a0a; }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--blood-coagulated), var(--blood-arterial));
+            color: var(--text-pure-white);
+            font-family: var(--font-monty);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+        }
+
+        .confirm-btn:hover {
+            background: linear-gradient(135deg, var(--blood-plasma), var(--blood-coagulated));
+            box-shadow: var(--vfx-glow);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .input-group { flex-direction: column; gap: 20px; }
+            .booking-title { font-size: 2rem; }
+            form { padding: 0 20px 30px 20px; }
+            .seat span, .seat.occupied { width: 35px; height: 32px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="booking-container">
+
+    <div class="movie-header-banner">
+        <img src="{{ movie.image.url }}" class="booking-image" alt="{{ movie.title }}">
+        <h1 class="booking-title">{{ movie.title }}</h1>
+    </div>
+
+    <h2 class="price-tag">₹{{ movie.price }} PER SEAT</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <input type="text" name="name" placeholder="ENTER YOUR NAME" required autocomplete="off">
+            <input type="email" name="email" placeholder="ENTER YOUR EMAIL" required autocomplete="off">
+        </div>
+
+        <div class="cinema-screen-container">
+            <div class="cinema-screen"></div>
+        </div>
+
+        <div class="seat-layout">
+            {% for row in "ABCDE" %}
+                {% for num in "123456789" %}
+                    {% with seat=row|add:num %}
+                        
+                        {% if seat in occupied %}
+                            <div class="seat occupied">
+                                {{ seat }}
+                            </div>
+                        {% else %}
+                            <label class="seat">
+                                <input type="checkbox" name="seats" value="{{ seat }}">
+                                <span>{{ seat }}</span>
+                            </label>
+                        {% endif %}
+
+                    {% endwith %}
+                {% endfor %}
+                <br> {% endfor %}
+        </div>
+
+        <div class="seat-legend">
+            <div class="legend-item"><div class="legend-box lb-avail"></div> Available</div>
+            <div class="legend-item"><div class="legend-box lb-select"></div> Selected</div>
+            <div class="legend-item"><div class="legend-box lb-occ"></div> Occupied</div>
+        </div>
+
+        <button type="submit" class="confirm-btn">
+            CONFIRM BOOKING
+        </button>
+
+    </form>
+</div>
+
+</body>
+</html>

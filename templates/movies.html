@@ -1,0 +1,261 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP Movies | Booking With Mishra</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* ==========================================================================
+           BLOODY MARY EDITION - MOVIES GALLERY CORE CSS
+           ========================================================================== */
+        :root {
+            --pure-black: #000000;
+            --card-bg: rgba(10, 2, 2, 0.85);
+            --blood-plasma: #ff0808;
+            --blood-coagulated: #8a0303;
+            --blood-dark: #3a0000;
+            --text-pure-white: #ffffff;
+            --text-muted: #a0a0a0;
+            --font-heading: 'Cinzel Decorative', cursive;
+            --font-body: 'Montserrat', sans-serif;
+            --glow-red: 0 0 15px rgba(255, 8, 8, 0.5), 0 0 30px rgba(138, 3, 3, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 80px 20px;
+            background-color: var(--pure-black);
+            color: var(--text-pure-white);
+            font-family: var(--font-body);
+            background-image: radial-gradient(circle at 50% 0%, #1a0000 0%, var(--pure-black) 60%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* ---------------------------------------------------
+           VVIP SECTION TITLE
+           --------------------------------------------------- */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: 900;
+            text-align: center;
+            color: var(--text-pure-white);
+            margin-bottom: 70px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            text-shadow: var(--glow-red);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blood-plasma), transparent);
+            margin: 20px auto 0;
+            box-shadow: var(--glow-red);
+        }
+
+        /* ---------------------------------------------------
+           CINEMATIC GRID LAYOUT
+           --------------------------------------------------- */
+        .movies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* ---------------------------------------------------
+           PREMIUM MOVIE CARD (GLASSMORPHISM)
+           --------------------------------------------------- */
+        .movie-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(138, 3, 3, 0.3);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--blood-plasma);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 1), 0 0 25px rgba(138, 3, 3, 0.3);
+        }
+
+        /* ---------------------------------------------------
+           IMAGE MASKING & VFX
+           --------------------------------------------------- */
+        .movie-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 420px; /* Fixed height for uniform cards */
+            overflow: hidden;
+        }
+
+        .movie-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.6s ease;
+            filter: grayscale(40%) contrast(110%);
+        }
+
+        .movie-card:hover .movie-image {
+            transform: scale(1.08);
+            filter: grayscale(0%) contrast(120%);
+        }
+
+        /* Dark Fade Overlay to blend image with text area */
+        .movie-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, var(--card-bg), transparent);
+            pointer-events: none;
+        }
+
+        /* ---------------------------------------------------
+           CARD CONTENT & TYPOGRAPHY
+           --------------------------------------------------- */
+        .movie-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            z-index: 2;
+        }
+
+        .movie-content h2 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--text-pure-white);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .movie-content p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            /* Smart Truncation: Keeps design perfectly aligned */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1; 
+        }
+
+        .movie-content h3 {
+            color: var(--blood-plasma);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255, 8, 8, 0.4);
+            letter-spacing: 1px;
+        }
+
+        /* ---------------------------------------------------
+           10X CLICKABLE BUTTON (Fixed HTML Issue)
+           --------------------------------------------------- */
+        .btn-primary {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--blood-coagulated), var(--blood-dark));
+            color: var(--text-pure-white);
+            padding: 16px 0;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border: 1px solid var(--blood-plasma);
+            transition: all 0.4s ease;
+            box-shadow: inset 0 0 10px rgba(255,8,8,0.1), 0 5px 15px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--blood-plasma), var(--blood-coagulated));
+            box-shadow: var(--glow-red);
+            transform: translateY(-3px);
+            color: var(--text-pure-white);
+        }
+
+        /* Button Shine Effect */
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            transition: 0.6s ease;
+        }
+        .btn-primary:hover::after { left: 150%; }
+
+        /* Responsive Title */
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.8rem; }
+            body { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="section-title">THE VIP GALLERY</h1>
+
+    <div class="movies-container">
+
+        {% for movie in movies %}
+        
+        <div class="movie-card">
+            
+            <div class="movie-image-wrapper">
+                <img src="{{ movie.image.url }}" class="movie-image" alt="{{ movie.title }}">
+            </div>
+
+            <div class="movie-content">
+                <h2>{{ movie.title }}</h2>
+                
+                <p>{{ movie.description }}</p>
+                
+                <h3>₹{{ movie.price }}</h3>
+
+                <a href="{% url 'book_movie' movie.id %}" class="btn-primary">
+                    SUMMON TICKETS
+                </a>
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>

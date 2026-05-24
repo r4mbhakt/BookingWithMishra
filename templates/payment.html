@@ -1,0 +1,390 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Secure Checkout | Bloody Mary Edition
+    </title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;600;700&family=Share+Tech+Mono&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    <style>
+
+        :root {
+
+            --pure-black: #000000;
+
+            --card-bg: rgba(10, 2, 2, 0.85);
+
+            --blood-plasma: #ff0808;
+
+            --blood-coagulated: #9e0000;
+
+            --blood-arterial: #610000;
+
+            --text-pure-white: #ffffff;
+
+            --text-muted: #888888;
+
+            --font-cinzel: 'Cinzel Decorative', cursive;
+
+            --font-monty: 'Montserrat', sans-serif;
+
+            --font-tech: 'Share Tech Mono', monospace;
+
+            --vfx-glow:
+                0 0 15px rgba(255, 8, 8, 0.5),
+                0 0 30px rgba(158, 0, 0, 0.4);
+        }
+
+
+
+        body {
+
+            margin: 0;
+
+            padding: 50px 20px;
+
+            background-color: var(--pure-black);
+
+            color: var(--text-pure-white);
+
+            font-family: var(--font-monty);
+
+            background-image:
+                radial-gradient(circle at 50% 50%, #150000 0%, var(--pure-black) 80%);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+
+
+        .payment-box {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            background: var(--card-bg);
+
+            border: 1px solid rgba(158, 0, 0, 0.4);
+
+            border-radius: 8px;
+
+            padding: 40px;
+
+            backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 25px 50px rgba(0,0,0,0.9),
+                inset 0 0 25px rgba(158,0,0,0.15);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+
+        .payment-box::before {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--blood-plasma),
+                    transparent
+                );
+
+            box-shadow: var(--vfx-glow);
+        }
+
+
+
+        .gateway-header {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+
+        .gateway-header h1 {
+
+            font-family: var(--font-cinzel);
+
+            font-size: 1.8rem;
+
+            color: var(--text-pure-white);
+
+            letter-spacing: 3px;
+
+            margin-bottom: 10px;
+        }
+
+
+
+        .security-badge {
+
+            color: var(--text-muted);
+
+            font-size: 0.75rem;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+        }
+
+
+
+        .security-badge i {
+
+            color: var(--blood-plasma);
+        }
+
+
+
+        .amount-container {
+
+            background: rgba(0, 0, 0, 0.6);
+
+            border: 1px solid var(--blood-arterial);
+
+            border-radius: 6px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+
+
+        .amount-label {
+
+            font-size: 0.8rem;
+
+            color: var(--text-muted);
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 5px;
+        }
+
+
+
+        .total-amount {
+
+            font-family: var(--font-tech);
+
+            font-size: 2.5rem;
+
+            color: var(--blood-plasma);
+
+            text-shadow: var(--vfx-glow);
+
+            letter-spacing: 2px;
+        }
+
+
+
+        .btn-pay {
+
+            width: 100%;
+
+            padding: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blood-coagulated),
+                    var(--blood-arterial)
+                );
+
+            color: white;
+
+            font-size: 1rem;
+
+            font-weight: 700;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            border: 1px solid var(--blood-plasma);
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            transition: 0.4s ease;
+
+            box-shadow:
+                0 10px 20px rgba(0,0,0,0.6);
+        }
+
+
+
+        .btn-pay:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blood-plasma),
+                    var(--blood-coagulated)
+                );
+
+            box-shadow: var(--vfx-glow);
+
+            transform: translateY(-2px);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="payment-box">
+
+    <div class="gateway-header">
+
+        <h1>
+            SECURE GATEWAY
+        </h1>
+
+        <div class="security-badge">
+
+            <i class="fa-solid fa-lock"></i>
+
+            256-Bit Encrypted Protocol
+
+        </div>
+
+    </div>
+
+
+
+    <div class="amount-container">
+
+        <div class="amount-label">
+            Amount Payable
+        </div>
+
+        <div class="total-amount">
+            ₹{{ total }}
+        </div>
+
+    </div>
+
+
+
+    <button id="rzp-button1"
+            class="btn-pay">
+
+        PAY NOW
+
+    </button>
+
+</div>
+
+
+
+<script>
+
+var options = {
+
+    "key": "{{ razorpay_key }}",
+
+    "amount": "{{ payment.amount }}",
+
+    "currency": "INR",
+
+    "name": "Booking With Mishra",
+
+    "description": "Premium Movie Ticket",
+
+    "image": "https://cdn-icons-png.flaticon.com/512/3004/3004613.png",
+
+    "order_id": "{{ payment.id }}",
+
+    "handler": function (response){
+
+        window.location.href = "/movies/success/";
+    },
+
+    "theme": {
+
+        "color": "#ff0000"
+    }
+};
+
+
+
+var rzp1 = new Razorpay(options);
+
+
+
+document.getElementById('rzp-button1').onclick = function(e){
+
+    rzp1.open();
+
+    e.preventDefault();
+}
+
+</script>
+
+</body>
+</html>
