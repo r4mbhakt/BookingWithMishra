@@ -1,0 +1,440 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>My Bookings | Secure Vault - Bloody Mary Edition</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Montserrat:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        /* * ---------------------------------------------------------
+         * 1. CSS VARIABLES & THEME CONFIGURATION
+         * ---------------------------------------------------------
+         */
+        :root {
+            /* Core Colors */
+            --color-void-black: #050000;
+            --color-pure-black: #000000;
+            
+            /* The Blood Palette */
+            --color-blood-bright: #ff0808;
+            --color-blood-plasma: #e60000;
+            --color-blood-crimson: #b30000;
+            --color-blood-coagulated: #800000;
+            --color-blood-arterial: #4d0000;
+
+            /* Text & Accents */
+            --color-text-pure: #ffffff;
+            --color-text-muted: #8a7b7b;
+            --color-text-dim: #5c4d4d;
+
+            /* Glassmorphism & UI */
+            --bg-glass: rgba(15, 2, 2, 0.6);
+            --bg-glass-hover: rgba(25, 2, 2, 0.85);
+            --border-glass: rgba(230, 0, 0, 0.2);
+            --border-glass-highlight: rgba(255, 8, 8, 0.5);
+            
+            /* Typography */
+            --font-primary: 'Montserrat', sans-serif;
+            --font-display: 'Cinzel Decorative', cursive;
+            --font-data: 'Share Tech Mono', monospace;
+
+            /* Visual Effects (VFX) */
+            --glow-blood-soft: 0 0 15px rgba(255, 8, 8, 0.2);
+            --glow-blood-intense: 0 0 25px rgba(255, 8, 8, 0.5);
+            --shadow-deep: 0 20px 40px rgba(0, 0, 0, 0.9);
+            
+            /* Transitions */
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* * ---------------------------------------------------------
+         * 2. RESET & GLOBAL STYLES
+         * ---------------------------------------------------------
+         */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-pure-black);
+            color: var(--color-text-pure);
+            font-family: var(--font-primary);
+            min-height: 100vh;
+            background-image: radial-gradient(circle at top, var(--color-blood-arterial) 0%, var(--color-pure-black) 60%);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 50px;
+        }
+
+        /* Custom Scrollbar for Premium Feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-pure-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-blood-coagulated);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-blood-crimson);
+        }
+
+        /* * ---------------------------------------------------------
+         * 3. PAGE HEADER
+         * ---------------------------------------------------------
+         */
+        .dashboard-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+
+        .dashboard-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--color-text-pure);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: var(--glow-blood-soft);
+            margin-bottom: 10px;
+            animation: textReveal 1.5s ease-out forwards;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .dashboard-subtitle i {
+            color: var(--color-blood-bright);
+        }
+
+        /* * ---------------------------------------------------------
+         * 4. BOOKINGS GRID LAYOUT
+         * ---------------------------------------------------------
+         */
+        .bookings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+        }
+
+        /* * ---------------------------------------------------------
+         * 5. PREMIUM BOOKING CARD
+         * ---------------------------------------------------------
+         */
+        .booking-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-deep);
+            transition: var(--transition-smooth);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            animation: cardEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Staggered animation delays for multiple cards */
+        .booking-card:nth-child(1) { animation-delay: 0.1s; }
+        .booking-card:nth-child(2) { animation-delay: 0.2s; }
+        .booking-card:nth-child(3) { animation-delay: 0.3s; }
+        .booking-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .booking-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--color-blood-bright), transparent);
+            opacity: 0.5;
+            transition: var(--transition-smooth);
+        }
+
+        .booking-card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-glass-hover);
+            border-color: var(--border-glass-highlight);
+            box-shadow: var(--shadow-deep), var(--glow-blood-soft);
+        }
+
+        .booking-card:hover::before {
+            opacity: 1;
+            box-shadow: var(--glow-blood-intense);
+        }
+
+        /* Card Header (Movie Title) */
+        .card-header {
+            padding: 25px;
+            background: linear-gradient(180deg, rgba(128, 0, 0, 0.15) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .movie-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-text-pure);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 10px;
+            background: rgba(255, 8, 8, 0.1);
+            border: 1px solid var(--color-blood-crimson);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--color-blood-bright);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Card Body (Data fields) */
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .data-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* Full width for specific fields */
+        .data-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .data-value {
+            font-family: var(--font-data);
+            font-size: 1.1rem;
+            color: var(--color-text-pure);
+            word-break: break-all;
+        }
+
+        .data-value.highlight {
+            color: var(--color-blood-bright);
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(255, 8, 8, 0.3);
+        }
+
+        /* QR Code Section */
+        .card-qr-section {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px dashed var(--color-blood-arterial);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-frame {
+            position: relative;
+            padding: 10px;
+            background: var(--color-pure-black);
+            border: 1px solid var(--color-blood-crimson);
+            border-radius: 8px;
+            box-shadow: inset 0 0 15px rgba(255, 8, 8, 0.1);
+        }
+
+        /* Decorative Corners for QR */
+        .qr-frame::before, .qr-frame::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--color-blood-bright);
+            transition: 0.3s ease;
+        }
+        .qr-frame::before {
+            top: -2px; left: -2px;
+            border-right: none; border-bottom: none;
+        }
+        .qr-frame::after {
+            bottom: -2px; right: -2px;
+            border-left: none; border-top: none;
+        }
+
+        .qr-frame img {
+            display: block;
+            width: 150px;
+            height: 150px;
+            border-radius: 4px;
+            filter: contrast(1.2);
+        }
+
+        /* * ---------------------------------------------------------
+         * 6. EMPTY STATE (NO BOOKINGS)
+         * ---------------------------------------------------------
+         */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            grid-column: 1 / -1;
+            background: var(--bg-glass);
+            border: 1px dashed var(--color-blood-coagulated);
+            border-radius: 12px;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--color-blood-arterial);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-text-muted);
+            letter-spacing: 2px;
+        }
+
+        /* * ---------------------------------------------------------
+         * 7. ANIMATIONS
+         * ---------------------------------------------------------
+         */
+        @keyframes textReveal {
+            0% { opacity: 0; transform: translateY(-20px); filter: blur(5px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .dashboard-title { font-size: 2.2rem; }
+            .bookings-container { grid-template-columns: 1fr; }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header class="dashboard-header">
+        
+        <h1 class="dashboard-title">My Vault</h1>
+        
+        <div class="dashboard-subtitle">
+            <i class="fa-solid fa-ticket-simple"></i>
+            <span>Secured Transactions</span>
+        </div>
+
+    </header>
+
+    <main class="bookings-container">
+
+        {% for booking in bookings %}
+        
+        <article class="booking-card">
+            
+            <div class="card-header">
+                <h2 class="movie-title">{{ booking.movie.title }}</h2>
+                <span class="status-badge"><i class="fa-solid fa-check"></i> Confirmed</span>
+            </div>
+
+            <div class="card-body">
+                
+                <div class="data-group full-width">
+                    <span class="data-label">Passenger Name</span>
+                    <span class="data-value">{{ booking.name }}</span>
+                </div>
+
+                <div class="data-group full-width">
+                    <span class="data-label">Secure Comm (Email)</span>
+                    <span class="data-value" style="font-size: 0.9rem;">{{ booking.email }}</span>
+                </div>
+
+                <div class="data-group">
+                    <span class="data-label">Seat Allocation</span>
+                    <span class="data-value">{{ booking.seats }}</span>
+                </div>
+
+                <div class="data-group">
+                    <span class="data-label">Total Amount</span>
+                    <span class="data-value highlight">₹{{ booking.total_price }}</span>
+                </div>
+
+                <div class="data-group full-width">
+                    <span class="data-label">Timestamp</span>
+                    <span class="data-value" style="color: var(--color-text-dim);">{{ booking.booked_at }}</span>
+                </div>
+
+            </div>
+
+            {% if booking.qr_code %}
+            <div class="card-qr-section">
+                
+                <div class="qr-frame">
+                    <img src="{{ booking.qr_code.url }}" alt="Encrypted Access QR">
+                </div>
+
+            </div>
+            {% endif %}
+
+        </article>
+
+        {% empty %}
+        
+        <div class="empty-state">
+            <i class="fa-solid fa-ghost"></i>
+            <h2>The Vault is Empty</h2>
+            <p style="color: var(--color-text-dim); margin-top: 10px; font-family: var(--font-data);">No secure transactions found in your records.</p>
+        </div>
+
+        {% endfor %}
+
+    </main>
+
+</body>
+</html>

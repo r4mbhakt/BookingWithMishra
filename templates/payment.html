@@ -5,291 +5,520 @@
 
 <head>
 
+    <!-- ======================================================= -->
+    <!-- META TAGS & DOCUMENT SETUP                              -->
+    <!-- ======================================================= -->
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0000">
+    <meta name="description" content="Secure Checkout - Bloody Mary Premium Edition">
+    
+    <title>Secure Checkout | Bloody Mary Premium Edition</title>
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>
-        Secure Checkout | Bloody Mary Edition
-    </title>
-
+    <!-- ======================================================= -->
+    <!-- EXTERNAL SCRIPTS & GATEWAY INTEGRATION                  -->
+    <!-- ======================================================= -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <!-- ======================================================= -->
+    <!-- FONTS & ICONS (PREMIUM TYPOGRAPHY)                      -->
+    <!-- ======================================================= -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Cinzel for headings, Montserrat for UI, Share Tech Mono for numbers -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Static CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Montserrat:wght@300;400;600;700&family=Share+Tech+Mono&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet"
-          href="{% static 'css/style.css' %}">
-
+    <!-- ======================================================= -->
+    <!-- PREMIUM STYLESHEET - BLOODY MARY EDITION                -->
+    <!-- ======================================================= -->
     <style>
 
+        /* 
+         * ---------------------------------------------------------
+         * 1. CSS VARIABLES & THEME CONFIGURATION
+         * ---------------------------------------------------------
+         */
         :root {
+            /* Core Colors */
+            --color-pure-black: #000000;
+            --color-void-black: #050000;
+            --color-abyss-black: #0a0202;
+            
+            /* The Blood Palette */
+            --color-blood-bright: #ff0808;
+            --color-blood-plasma: #e60000;
+            --color-blood-crimson: #b30000;
+            --color-blood-coagulated: #800000;
+            --color-blood-arterial: #4d0000;
+            --color-blood-dried: #2a0000;
 
-            --pure-black: #000000;
+            /* Text & Accents */
+            --color-text-pure: #ffffff;
+            --color-text-off: #f0f0f0;
+            --color-text-muted: #8a7b7b;
+            --color-accent-gold: #c5a059;
 
-            --card-bg: rgba(10, 2, 2, 0.85);
+            /* Glassmorphism & UI */
+            --bg-glass: rgba(10, 2, 2, 0.75);
+            --border-glass: rgba(230, 0, 0, 0.3);
+            --border-glass-highlight: rgba(255, 8, 8, 0.6);
+            
+            /* Typography */
+            --font-primary: 'Montserrat', sans-serif;
+            --font-display: 'Cinzel Decorative', cursive;
+            --font-numbers: 'Share Tech Mono', monospace;
 
-            --blood-plasma: #ff0808;
+            /* Visual Effects (VFX) */
+            --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.8);
+            --shadow-deep: 0 25px 50px rgba(0, 0, 0, 0.95);
+            --glow-blood-soft: 0 0 15px rgba(255, 8, 8, 0.3);
+            --glow-blood-intense: 0 0 30px rgba(230, 0, 0, 0.6), 0 0 60px rgba(128, 0, 0, 0.4);
+            --glow-text: 0 0 10px rgba(255, 255, 255, 0.5);
 
-            --blood-coagulated: #9e0000;
-
-            --blood-arterial: #610000;
-
-            --text-pure-white: #ffffff;
-
-            --text-muted: #888888;
-
-            --font-cinzel: 'Cinzel Decorative', cursive;
-
-            --font-monty: 'Montserrat', sans-serif;
-
-            --font-tech: 'Share Tech Mono', monospace;
-
-            --vfx-glow:
-                0 0 15px rgba(255, 8, 8, 0.5),
-                0 0 30px rgba(158, 0, 0, 0.4);
+            /* Transitions */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* 
+         * ---------------------------------------------------------
+         * 2. RESET & BASE STYLES
+         * ---------------------------------------------------------
+         */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
 
         body {
-
-            margin: 0;
-
-            padding: 50px 20px;
-
-            background-color: var(--pure-black);
-
-            color: var(--text-pure-white);
-
-            font-family: var(--font-monty);
-
-            background-image:
-                radial-gradient(circle at 50% 50%, #150000 0%, var(--pure-black) 80%);
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
+            background-color: var(--color-pure-black);
+            color: var(--color-text-pure);
+            font-family: var(--font-primary);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* 
+         * ---------------------------------------------------------
+         * 3. BACKGROUND EFFECTS & AMBIENCE
+         * ---------------------------------------------------------
+         */
+        .ambient-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(
+                circle at 50% 50%, 
+                var(--color-blood-dried) 0%, 
+                var(--color-void-black) 60%, 
+                var(--color-pure-black) 100%
+            );
+            z-index: -3;
+        }
 
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .blood-vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            box-shadow: inset 0 0 150px rgba(128, 0, 0, 0.4);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 
+         * ---------------------------------------------------------
+         * 4. MAIN LAYOUT & PAYMENT BOX
+         * ---------------------------------------------------------
+         */
+        .checkout-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            padding: 20px;
+            z-index: 10;
+            perspective: 1000px;
+        }
 
         .payment-box {
-
-            width: 100%;
-
-            max-width: 500px;
-
-            background: var(--card-bg);
-
-            border: 1px solid rgba(158, 0, 0, 0.4);
-
-            border-radius: 8px;
-
-            padding: 40px;
-
-            backdrop-filter: blur(25px);
-
-            box-shadow:
-                0 25px 50px rgba(0,0,0,0.9),
-                inset 0 0 25px rgba(158,0,0,0.15);
-
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 45px 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-deep), inset 0 0 30px rgba(128, 0, 0, 0.2);
             position: relative;
-
+            transform-style: preserve-3d;
+            animation: boxEntrance 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             overflow: hidden;
         }
 
-
-
+        /* Top Bloody Border Line */
         .payment-box::before {
-
             content: '';
-
             position: absolute;
-
             top: 0;
             left: 0;
-
             width: 100%;
-            height: 3px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    var(--blood-plasma),
-                    transparent
-                );
-
-            box-shadow: var(--vfx-glow);
+            height: 4px;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                var(--color-blood-crimson) 20%,
+                var(--color-blood-bright) 50%,
+                var(--color-blood-crimson) 80%,
+                transparent 100%
+            );
+            box-shadow: var(--glow-blood-intense);
+            animation: bloodFlow 3s infinite linear;
         }
 
-
-
+        /* 
+         * ---------------------------------------------------------
+         * 5. HEADER & BRANDING
+         * ---------------------------------------------------------
+         */
         .gateway-header {
-
             text-align: center;
-
-            margin-bottom: 30px;
+            margin-bottom: 35px;
+            position: relative;
         }
 
+        .gateway-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--color-blood-coagulated);
+            margin: 15px auto 0;
+            box-shadow: var(--glow-blood-soft);
+        }
 
+        .gateway-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--color-text-pure);
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(255, 0, 0, 0.4);
+            animation: textFlicker 5s infinite;
+        }
 
-        .gateway-header h1 {
-
-            font-family: var(--font-cinzel);
-
-            font-size: 1.8rem;
-
-            color: var(--text-pure-white);
-
+        .security-badge {
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
             letter-spacing: 3px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
+        .security-badge i {
+            color: var(--color-blood-bright);
+            font-size: 1rem;
+            filter: drop-shadow(0 0 5px rgba(255, 8, 8, 0.5));
+            animation: lockPulse 2s infinite ease-in-out;
+        }
+
+        /* 
+         * ---------------------------------------------------------
+         * 6. AMOUNT DISPLAY COMPONENT
+         * ---------------------------------------------------------
+         */
+        .amount-container {
+            background: linear-gradient(
+                180deg,
+                rgba(0, 0, 0, 0.8) 0%,
+                rgba(20, 0, 0, 0.9) 100%
+            );
+            border: 1px solid var(--color-blood-arterial);
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8);
+            transition: var(--transition-medium);
+        }
+
+        .amount-container:hover {
+            border-color: var(--border-glass-highlight);
+            box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.8), var(--glow-blood-soft);
+        }
+
+        /* Scanline effect inside amount */
+        .amount-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(255, 8, 8, 0.03) 51%,
+                transparent 100%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        .amount-label {
+            font-family: var(--font-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
             margin-bottom: 10px;
         }
 
-
-
-        .security-badge {
-
-            color: var(--text-muted);
-
-            font-size: 0.75rem;
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 8px;
-        }
-
-
-
-        .security-badge i {
-
-            color: var(--blood-plasma);
-        }
-
-
-
-        .amount-container {
-
-            background: rgba(0, 0, 0, 0.6);
-
-            border: 1px solid var(--blood-arterial);
-
-            border-radius: 6px;
-
-            padding: 20px;
-
-            text-align: center;
-
-            margin-bottom: 35px;
-        }
-
-
-
-        .amount-label {
-
-            font-size: 0.8rem;
-
-            color: var(--text-muted);
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
-
-            margin-bottom: 5px;
-        }
-
-
-
         .total-amount {
-
-            font-family: var(--font-tech);
-
-            font-size: 2.5rem;
-
-            color: var(--blood-plasma);
-
-            text-shadow: var(--vfx-glow);
-
-            letter-spacing: 2px;
-        }
-
-
-
-        .btn-pay {
-
-            width: 100%;
-
-            padding: 18px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--blood-coagulated),
-                    var(--blood-arterial)
-                );
-
-            color: white;
-
-            font-size: 1rem;
-
+            font-family: var(--font-numbers);
+            font-size: 3.5rem;
             font-weight: 700;
-
-            letter-spacing: 4px;
-
-            text-transform: uppercase;
-
-            border: 1px solid var(--blood-plasma);
-
-            border-radius: 4px;
-
-            cursor: pointer;
-
-            transition: 0.4s ease;
-
-            box-shadow:
-                0 10px 20px rgba(0,0,0,0.6);
+            color: var(--color-blood-bright);
+            text-shadow: var(--glow-blood-intense);
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
         }
 
+        .currency-symbol {
+            font-size: 2.2rem;
+            vertical-align: super;
+            opacity: 0.8;
+            margin-right: 4px;
+        }
 
+        /* 
+         * ---------------------------------------------------------
+         * 7. PREMIUM PAYMENT BUTTON
+         * ---------------------------------------------------------
+         */
+        .btn-pay {
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(
+                135deg,
+                var(--color-blood-coagulated) 0%,
+                var(--color-blood-arterial) 50%,
+                var(--color-blood-crimson) 100%
+            );
+            color: var(--color-text-pure);
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            border: 1px solid var(--color-blood-bright);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: var(--transition-medium);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Button Hover Effects */
+        .btn-pay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: var(--transition-slow);
+            z-index: -1;
+        }
 
         .btn-pay:hover {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--blood-plasma),
-                    var(--blood-coagulated)
-                );
-
-            box-shadow: var(--vfx-glow);
-
-            transform: translateY(-2px);
+            background: linear-gradient(
+                135deg,
+                var(--color-blood-crimson) 0%,
+                var(--color-blood-coagulated) 50%,
+                var(--color-blood-arterial) 100%
+            );
+            box-shadow: var(--glow-blood-intense), 0 15px 25px rgba(0, 0, 0, 0.8);
+            transform: translateY(-3px) scale(1.02);
+            text-shadow: var(--glow-text);
+            border-color: #ff3333;
         }
+
+        .btn-pay:hover::before {
+            left: 100%;
+        }
+
+        .btn-pay:active {
+            transform: translateY(1px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-pay span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 
+         * ---------------------------------------------------------
+         * 8. DECORATIVE ELEMENTS (BLOOD DRIPS)
+         * ---------------------------------------------------------
+         */
+        .blood-drip {
+            position: absolute;
+            background: var(--color-blood-bright);
+            width: 3px;
+            height: 20px;
+            top: 0;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 0 5px var(--color-blood-bright);
+            opacity: 0.8;
+        }
+
+        .drip-1 { left: 15%; animation: dripDrop 4s infinite 0.2s; }
+        .drip-2 { left: 45%; animation: dripDrop 5s infinite 1.5s; width: 4px; }
+        .drip-3 { left: 85%; animation: dripDrop 3.5s infinite 0.8s; }
+
+        /* 
+         * ---------------------------------------------------------
+         * 9. KEYFRAME ANIMATIONS
+         * ---------------------------------------------------------
+         */
+        @keyframes boxEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95) rotateX(10deg);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes bloodFlow {
+            0% { background-position: -500px 0; }
+            100% { background-position: 500px 0; }
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; text-shadow: 0 0 10px red; }
+        }
+
+        @keyframes textFlicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+        }
+
+        @keyframes dripDrop {
+            0% {
+                height: 5px;
+                transform: translateY(0);
+                opacity: 0.8;
+            }
+            50% {
+                height: 35px;
+            }
+            80% {
+                height: 35px;
+                transform: translateY(15px);
+                opacity: 0.8;
+            }
+            100% {
+                height: 10px;
+                transform: translateY(40px);
+                opacity: 0;
+            }
+        }
+
+        /* 
+         * ---------------------------------------------------------
+         * 10. RESPONSIVE DESIGN MEDIA QUERIES
+         * ---------------------------------------------------------
+         */
+        @media screen and (max-width: 600px) {
+            .payment-box {
+                padding: 35px 25px;
+                margin: 0 15px;
+            }
+
+            .gateway-title {
+                font-size: 1.8rem;
+            }
+
+            .total-amount {
+                font-size: 2.8rem;
+            }
+            
+            .btn-pay {
+                padding: 18px;
+                font-size: 1rem;
+            }
+        }
+
+        /* 
+         * ---------------------------------------------------------
+         * END OF PREMIUM STYLESHEET
+         * ---------------------------------------------------------
+         */
 
     </style>
 
@@ -297,94 +526,143 @@
 
 <body>
 
-<div class="payment-box">
+    <!-- Ambient Background Elements -->
+    <div class="ambient-background"></div>
+    <div class="noise-overlay"></div>
+    <div class="blood-vignette"></div>
 
-    <div class="gateway-header">
+    <!-- Main Checkout Container -->
+    <div class="checkout-wrapper">
 
-        <h1>
-            SECURE GATEWAY
-        </h1>
+        <div class="payment-box">
 
-        <div class="security-badge">
+            <!-- Decorative Blood Drips -->
+            <div class="blood-drip drip-1"></div>
+            <div class="blood-drip drip-2"></div>
+            <div class="blood-drip drip-3"></div>
 
-            <i class="fa-solid fa-lock"></i>
+            <!-- Header Section -->
+            <header class="gateway-header">
+                
+                <h1 class="gateway-title">
+                    Secure Gateway
+                </h1>
 
-            256-Bit Encrypted Protocol
+                <div class="security-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>256-Bit Encrypted Protocol</span>
+                </div>
+
+            </header>
+
+            <!-- Amount Display Section -->
+            <section class="amount-container">
+                
+                <div class="amount-label">
+                    Amount Payable
+                </div>
+
+                <div class="total-amount">
+                    <span class="currency-symbol">₹</span>{{ total }}
+                </div>
+
+            </section>
+
+            <!-- Payment Action Section -->
+            <section class="action-container">
+
+                <button id="rzp-button1" class="btn-pay" type="button">
+                    <span>Initiate Blood Pact (Pay)</span>
+                </button>
+
+            </section>
 
         </div>
 
     </div>
 
+    <!-- ======================================================= -->
+    <!-- RAZORPAY JAVASCRIPT INTEGRATION                         -->
+    <!-- ======================================================= -->
+    <script>
+        /**
+         * ---------------------------------------------------------
+         * RAZORPAY CONFIGURATION OBJECT
+         * ---------------------------------------------------------
+         * Do not modify the backend variables populated by Django.
+         */
+        var options = {
+            
+            // Authentication Key
+            "key": "{{ razorpay_key }}",
+            
+            // Transaction Details
+            "amount": "{{ payment.amount }}",
+            "currency": "INR",
+            
+            // Branding Details
+            "name": "Booking With Mishra",
+            "description": "Premium Movie Ticket - Bloody Mary Edition",
+            "image": "https://cdn-icons-png.flaticon.com/512/3004/3004613.png",
+            
+            // Order ID generated by backend
+            "order_id": "{{ payment.id }}",
+            
+            // Success Handler Function
+            "handler": function (response) {
+                
+                // Create a dynamic form for submission
+                var form = document.createElement("form");
+                form.method = "POST";
+                form.action = "/movies/payment/";
+                
+                // Add CSRF Token for Django Security
+                var csrf = document.createElement("input");
+                csrf.type = "hidden";
+                csrf.name = "csrfmiddlewaretoken";
+                csrf.value = "{{ csrf_token }}";
+                form.appendChild(csrf);
+                
+                // Append form to body and submit
+                document.body.appendChild(form);
+                form.submit();
+                
+            },
+            
+            // Gateway UI Theme
+            "theme": {
+                "color": "#b30000" // Matched to Bloody Mary Crimson
+            }
+        };
 
+        /**
+         * ---------------------------------------------------------
+         * RAZORPAY INITIALIZATION & EVENT LISTENER
+         * ---------------------------------------------------------
+         */
+        
+        // Initialize Razorpay instance
+        var rzp1 = new Razorpay(options);
+        
+        // Handle failure scenario (Optional, but good practice)
+        rzp1.on('payment.failed', function (response){
+            console.error("Payment Failed");
+            console.error(response.error.code);
+            console.error(response.error.description);
+        });
 
-    <div class="amount-container">
+        // Attach click event to the Payment Button
+        document.getElementById('rzp-button1').onclick = function(e){
+            
+            // Open Razorpay Checkout Modal
+            rzp1.open();
+            
+            // Prevent default button behavior
+            e.preventDefault();
+            
+        };
 
-        <div class="amount-label">
-            Amount Payable
-        </div>
-
-        <div class="total-amount">
-            ₹{{ total }}
-        </div>
-
-    </div>
-
-
-
-    <button id="rzp-button1"
-            class="btn-pay">
-
-        PAY NOW
-
-    </button>
-
-</div>
-
-
-
-<script>
-
-var options = {
-
-    "key": "{{ razorpay_key }}",
-
-    "amount": "{{ payment.amount }}",
-
-    "currency": "INR",
-
-    "name": "Booking With Mishra",
-
-    "description": "Premium Movie Ticket",
-
-    "image": "https://cdn-icons-png.flaticon.com/512/3004/3004613.png",
-
-    "order_id": "{{ payment.id }}",
-
-    "handler": function (response){
-
-        window.location.href = "/movies/success/";
-    },
-
-    "theme": {
-
-        "color": "#ff0000"
-    }
-};
-
-
-
-var rzp1 = new Razorpay(options);
-
-
-
-document.getElementById('rzp-button1').onclick = function(e){
-
-    rzp1.open();
-
-    e.preventDefault();
-}
-
-</script>
+    </script>
 
 </body>
 </html>

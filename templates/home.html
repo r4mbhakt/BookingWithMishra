@@ -580,6 +580,11 @@
             
             <li>
                 {% if user.is_authenticated %}
+                <li>
+                    <a href="/movies/my-bookings/" class="nav-item">
+                        My Bookings
+                    </a>
+            </li>
                 <div class="user-profile">
                     <div class="user-circle">
                         {{ user.username|first|upper }}

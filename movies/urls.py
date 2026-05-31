@@ -30,4 +30,9 @@ urlpatterns = [
         views.success_page,
         name='success'
     ),
+    path(
+        'my-bookings/',
+        views.my_bookings,
+        name='my_bookings'
+    ),
 ]
