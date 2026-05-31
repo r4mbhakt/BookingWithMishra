@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-change-this-key'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
 
@@ -109,21 +111,12 @@ WSGI_APPLICATION = 'booking_with_mishra.wsgi.application'
 # DATABASE
 # =====================================================
 
+import dj_database_url
+
 DATABASES = {
-    'default': {
-
-        'ENGINE': 'django.db.backends.mysql',
-
-        'NAME': 'booking_with_mishra',
-
-        'USER': 'root',
-
-        'PASSWORD': 'rishupandey',
-
-        'HOST': 'localhost',
-
-        'PORT': '3306',
-    }
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL")
+    )
 }
 
 
